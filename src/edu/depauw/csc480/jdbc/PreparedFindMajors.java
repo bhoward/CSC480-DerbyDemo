@@ -17,7 +17,7 @@ public class PreparedFindMajors {
                 + "where did = majorid "
                 + "and dname = ?";
       
-		String url = "jdbc:derby:studentdb";
+		String url = "jdbc:derby:db/studentdb";
 		Driver d = new EmbeddedDriver();
 		try (Connection conn = d.connect(url, null); PreparedStatement pstmt = conn.prepareStatement(qry)) {
 			pstmt.setString(1, major);

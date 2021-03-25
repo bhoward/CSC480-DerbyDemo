@@ -17,7 +17,7 @@ public class FindMajors {
                 + "where did = majorid "
                 + "and dname = '" + major + "'";
       
-		String url = "jdbc:derby:studentdb";
+		String url = "jdbc:derby:db/studentdb";
 		Driver d = new EmbeddedDriver();
 		try (Connection conn = d.connect(url, null);
 				Statement stmt = conn.createStatement();

@@ -6,7 +6,7 @@ import org.apache.derby.jdbc.EmbeddedDriver;
 
 public class ChangeMajor {
 	public static void main(String[] args) {
-		String url = "jdbc:derby:studentdb";
+		String url = "jdbc:derby:db/studentdb";
 		String cmd = "update STUDENT set MajorId=30 where SName='amy'";
 
 		Driver d = new EmbeddedDriver();

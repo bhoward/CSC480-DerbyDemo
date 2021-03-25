@@ -5,7 +5,7 @@ import org.apache.derby.jdbc.EmbeddedDriver;
 
 public class StudentMajor {
 	public static void main(String[] args) {
-		String url = "jdbc:derby:studentdb";
+		String url = "jdbc:derby:db/studentdb";
 		String qry = "select SName, DName "
 				+ "from DEPT, STUDENT "
 				+ "where MajorId = DId";

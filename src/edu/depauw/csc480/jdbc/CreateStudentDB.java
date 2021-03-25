@@ -6,7 +6,7 @@ import org.apache.derby.jdbc.EmbeddedDriver;
 
 public class CreateStudentDB {
 	public static void main(String[] args) {
-		String url = "jdbc:derby:studentdb;create=true";
+		String url = "jdbc:derby:db/studentdb;create=true";
 		Driver d = new EmbeddedDriver();
 
 		try (Connection conn = d.connect(url, null)) {
