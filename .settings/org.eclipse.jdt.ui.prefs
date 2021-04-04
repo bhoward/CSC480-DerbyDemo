@@ -1,2 +1,3 @@
 eclipse.preferences.version=1
-formatter_settings_version=20
+formatter_profile=_Eclipse with vertical array initializers
+formatter_settings_version=21
