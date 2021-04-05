@@ -104,6 +104,12 @@ public class Main {
 		out.println("6: Change grade");
 	}
 
+	private static String requestString(String prompt) {
+		out.print(prompt);
+		out.flush();
+		return in.nextLine();
+	}
+
 	private static void createTables(Connection conn) {
 		// First clean up from previous runs, if any
 		dropTables(conn);
@@ -143,7 +149,7 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		sb.append("create table DEPT(");
 		sb.append("  DId int,");
-		sb.append("  DName varchar(8),");
+		sb.append("  DName varchar(8) not null,");
 		sb.append("  primary key (DId)");
 		sb.append(")");
 		doUpdate(conn, sb.toString(), "Table DEPT created.");
@@ -151,44 +157,44 @@ public class Main {
 		sb = new StringBuilder();
 		sb.append("create table STUDENT(");
 		sb.append("  SId int,");
-		sb.append("  SName varchar(10),");
+		sb.append("  SName varchar(10) not null,");
 		sb.append("  MajorId int,");
 		sb.append("  GradYear int,");
 		sb.append("  primary key (SId),");
-		sb.append("  foreign key (MajorId) references DEPT");
+		sb.append("  foreign key (MajorId) references DEPT on delete set null");
 		sb.append(")");
 		doUpdate(conn, sb.toString(), "Table STUDENT created.");
 
 		sb = new StringBuilder();
 		sb.append("create table COURSE(");
 		sb.append("  CId int,");
-		sb.append("  Title varchar(20),");
-		sb.append("  DeptId int,");
+		sb.append("  Title varchar(20) not null,");
+		sb.append("  DeptId int not null,");
 		sb.append("  primary key (CId),");
-		sb.append("  foreign key (DeptId) references DEPT");
+		sb.append("  foreign key (DeptId) references DEPT on delete cascade");
 		sb.append(")");
 		doUpdate(conn, sb.toString(), "Table COURSE created.");
 
 		sb = new StringBuilder();
 		sb.append("create table SECTION(");
 		sb.append("  SectId int,");
-		sb.append("  CourseId int,");
-		sb.append("  Prof varchar(8),");
-		sb.append("  YearOffered int,");
+		sb.append("  CourseId int not null,");
+		sb.append("  Prof varchar(8) not null,");
+		sb.append("  YearOffered int not null,");
 		sb.append("  primary key (SectId),");
-		sb.append("  foreign key (CourseId) references COURSE");
+		sb.append("  foreign key (CourseId) references COURSE on delete cascade");
 		sb.append(")");
 		doUpdate(conn, sb.toString(), "Table SECTION created.");
 
 		sb = new StringBuilder();
 		sb.append("create table ENROLL(");
 		sb.append("  EId int,");
-		sb.append("  StudentId int,");
-		sb.append("  SectionId int,");
+		sb.append("  StudentId int not null,");
+		sb.append("  SectionId int not null,");
 		sb.append("  Grade varchar(2),");
 		sb.append("  primary key (EId),");
-		sb.append("  foreign key (StudentId) references STUDENT,");
-		sb.append("  foreign key (SectionId) references SECTION");
+		sb.append("  foreign key (StudentId) references STUDENT on delete cascade,");
+		sb.append("  foreign key (SectionId) references SECTION on delete no action");
 		sb.append(")");
 		doUpdate(conn, sb.toString(), "Table ENROLL created.");
 	}
@@ -457,12 +463,5 @@ public class Main {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private static String requestString(String prompt) {
-		out.print(prompt);
-		out.flush();
-		String sid = in.nextLine();
-		return sid;
 	}
 }
