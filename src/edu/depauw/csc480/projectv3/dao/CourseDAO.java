@@ -214,5 +214,6 @@ public class CourseDAO {
 		Statement stmt = conn.createStatement();
 		String s = "delete from COURSE";
 		stmt.executeUpdate(s);
+		cache.clear();
 	}
 }

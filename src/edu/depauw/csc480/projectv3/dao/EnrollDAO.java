@@ -178,5 +178,6 @@ public class EnrollDAO {
 		Statement stmt = conn.createStatement();
 		String s = "delete from ENROLL";
 		stmt.executeUpdate(s);
+		cache.clear();
 	}
 }

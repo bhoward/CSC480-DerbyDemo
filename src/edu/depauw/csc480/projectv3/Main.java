@@ -3,12 +3,13 @@ package edu.depauw.csc480.projectv3;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-import edu.depauw.csc480.projectv2.dao.DatabaseManager;
-import edu.depauw.csc480.projectv2.model.Course;
-import edu.depauw.csc480.projectv2.model.Dept;
-import edu.depauw.csc480.projectv2.model.Enroll;
-import edu.depauw.csc480.projectv2.model.Section;
-import edu.depauw.csc480.projectv2.model.Student;
+import edu.depauw.csc480.projectv3.dao.DatabaseManager;
+import edu.depauw.csc480.projectv3.model.Course;
+import edu.depauw.csc480.projectv3.model.Dept;
+import edu.depauw.csc480.projectv3.model.Enroll;
+import edu.depauw.csc480.projectv3.model.Section;
+import edu.depauw.csc480.projectv3.model.Student;
+
 
 /**
  * This is an example of a menu-driven client for Sciore's student database. It
@@ -99,6 +100,7 @@ public class Main {
 	@SuppressWarnings("unused")
 	private static void resetTables(DatabaseManager dbm) {
 		dbm.clearTables();
+		dbm.commit();
 
 		Dept compsci = dbm.insertDept(10, "compsci");
 		Dept math = dbm.insertDept(20, "math");

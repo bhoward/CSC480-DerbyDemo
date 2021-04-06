@@ -236,5 +236,6 @@ public class DeptDAO {
 		Statement stmt = conn.createStatement();
 		String s = "delete from DEPT";
 		stmt.executeUpdate(s);
+		cache.clear();
 	}
 }

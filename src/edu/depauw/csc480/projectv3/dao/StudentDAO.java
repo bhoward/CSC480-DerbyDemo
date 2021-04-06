@@ -332,5 +332,6 @@ public class StudentDAO {
 		Statement stmt = conn.createStatement();
 		String s = "delete from STUDENT";
 		stmt.executeUpdate(s);
+		cache.clear();
 	}
 }

@@ -177,5 +177,6 @@ public class SectionDAO {
 		Statement stmt = conn.createStatement();
 		String s = "delete from SECTION";
 		stmt.executeUpdate(s);
+		cache.clear();
 	}
 }
