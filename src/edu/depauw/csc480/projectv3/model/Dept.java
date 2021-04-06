@@ -42,6 +42,7 @@ public class Dept {
 	}
 
 	public void invalidate() {
+		majors = null;
 		courses = null;
 	}
 }
