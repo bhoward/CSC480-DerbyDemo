@@ -1,0 +1,3 @@
+This may need the following added to the VM arguments on the Run Configuration:
+
+-javaagent:lib/openjpa-all-3.1.2.jar

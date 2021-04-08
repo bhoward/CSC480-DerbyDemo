@@ -13,6 +13,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<derby.version>10.14.2.0</derby.version>
+		<openjpa.version>3.1.2</openjpa.version>
 		<tomcat.version>10.0.4</tomcat.version>
 	</properties>
 
@@ -27,6 +28,11 @@
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbytools</artifactId>
 			<version>${derby.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openjpa</groupId>
+			<artifactId>openjpa-all</artifactId>
+			<version>${openjpa.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.servlet</groupId>

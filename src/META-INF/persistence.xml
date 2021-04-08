@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+	<persistence-unit name="studentdb">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		
+		<class>edu.depauw.csc480.projectv4.model.Course</class>
+		<class>edu.depauw.csc480.projectv4.model.Dept</class>
+		<class>edu.depauw.csc480.projectv4.model.Enroll</class>
+		<class>edu.depauw.csc480.projectv4.model.Section</class>
+		<class>edu.depauw.csc480.projectv4.model.Student</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:db/studentdb;create=true" />
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			
+			<!-- this tells OpenJPA to automatically manage both sides of a relationship -->
+			<property name="openjpa.InverseManager" value="true" />
+			
+			<!-- this tells OpenJPA to create all the tables if they don't already exist, for testing.
+				To also delete the table contents, change 'add' to 'add,deleteTableContents' -->
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(SchemaAction='add')" />
+		</properties>
+	</persistence-unit>
+</persistence>
