@@ -286,7 +286,7 @@ public class StudentDAO {
 			return students;
 		} catch (SQLException e) {
 			dbm.cleanup();
-			throw new RuntimeException("error finding student", e);
+			throw new RuntimeException("error finding students", e);
 		}
 	}
 

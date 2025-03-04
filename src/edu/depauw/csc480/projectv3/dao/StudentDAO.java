@@ -282,9 +282,7 @@ public class StudentDAO {
 	 * pushing the limits of doing too much work on the client side and not in the
 	 * database server, because it might be tempting to filter this collection with
 	 * Java code. Instead, we should use this only when we really want all of the
-	 * students, and write other query methods to retrieve specific subsets. Also,
-	 * as with find, this creates all new objects in memory, even if other Student
-	 * objects already exist.
+	 * students, and write other query methods to retrieve specific subsets.
 	 * 
 	 * @return the collection
 	 */
@@ -319,7 +317,7 @@ public class StudentDAO {
 			return students;
 		} catch (SQLException e) {
 			dbm.cleanup();
-			throw new RuntimeException("error finding student", e);
+			throw new RuntimeException("error finding students", e);
 		}
 	}
 

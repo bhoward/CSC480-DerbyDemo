@@ -46,11 +46,15 @@ public class Main {
 				addStudent(em);
 				break;
 
-			case "5": // Add enrollment
+			case "5": // List sections
+				listSections(em);
+				break;
+				
+			case "6": // Add enrollment
 				addEnrollment(em);
 				break;
 
-			case "6": // Change grade
+			case "7": // Change grade
 				changeGrade(em);
 				break;
 
@@ -59,8 +63,6 @@ public class Main {
 				break;
 			}
 		}
-		
-		em.close();
 		out.println("Done");
 	}
 
@@ -70,8 +72,9 @@ public class Main {
 		out.println("2: List students");
 		out.println("3: Show transcript");
 		out.println("4: Add student");
-		out.println("5: Add enrollment");
-		out.println("6: Change grade");
+		out.println("5: List sections");
+		out.println("6: Add enrollment");
+		out.println("7: Change grade");
 	}
 
 	private static String requestString(String prompt) {
@@ -269,6 +272,32 @@ public class Main {
 		tryCommit(tx);
 		
 		// TODO not checking for failure ...
+	}
+
+	/**
+	 * Print a table of all sections with their id number, department, title,
+	 * professor, and year offered.
+	 * 
+	 * @param dbm
+	 */
+	private static void listSections(EntityManager em) {
+		out.printf("%-3s %-8s %-20s %-8s %4s\n", "Id", "Dept", "Title", "Prof", "Year");
+		out.println("-----------------------------------------------");
+
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+
+		String query = "select k from Section k";
+		TypedQuery<Section> q = em.createQuery(query, Section.class);
+		
+		for (Section section : q.getResultList()) {
+			Course course = section.getCourse();
+			Dept dept = course.getDept();
+			out.printf("%-3d %-8s %-20s %-8s %4d\n", section.getSectId(), dept.getDName(), course.getTitle(),
+					section.getProf(), section.getYearOffered());
+		}
+		
+		tryCommit(tx);
 	}
 
 	/**

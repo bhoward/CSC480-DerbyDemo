@@ -116,6 +116,10 @@ public class DatabaseManager {
 	public Collection<Student> getStudents() {
 		return studentDAO.getAll();
 	}
+	
+	public Collection<Section> getSections() {
+		return sectionDAO.getAll();
+	}
 
 	// ***************************************************************
 	// Data insertion functions -- create new model object from attributes

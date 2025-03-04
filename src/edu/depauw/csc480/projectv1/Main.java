@@ -46,11 +46,15 @@ public class Main {
 					addStudent(conn);
 					break;
 
-				case "5": // Add enrollment
+				case "5": // List sections
+					listSections(conn);
+					break;
+					
+				case "6": // Add enrollment
 					addEnrollment(conn);
 					break;
 
-				case "6": // Change grade
+				case "7": // Change grade
 					changeGrade(conn);
 					break;
 
@@ -100,8 +104,9 @@ public class Main {
 		out.println("2: List students");
 		out.println("3: Show transcript");
 		out.println("4: Add student");
-		out.println("5: Add enrollment");
-		out.println("6: Change grade");
+		out.println("5: List sections");
+		out.println("6: Add enrollment");
+		out.println("7: Change grade");
 	}
 
 	private static String requestString(String prompt) {
@@ -401,6 +406,36 @@ public class Main {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Print a table of all sections with their id number, department, title,
+	 * professor, and year offered.
+	 * 
+	 * @param conn
+	 */
+	private static void listSections(Connection conn) {
+		StringBuilder query = new StringBuilder();
+		query.append("select k.SectId, d.DName, c.Title, k.Prof, k.YearOffered");
+		query.append("  from SECTION k, COURSE c, DEPT d");
+		query.append("  where k.CourseId = c.CId and c.DeptId = d.DId");
+
+		try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query.toString())) {
+			out.printf("%-3s %-8s %-20s %-8s %4s\n", "Id", "Dept", "Title", "Prof", "Year");
+			out.println("-----------------------------------------------");
+			while (rs.next()) {
+				int sectid = rs.getInt("SectId");
+				String dname = rs.getString("DName");
+				String title = rs.getString("Title");
+				String prof = rs.getString("Prof");
+				int year = rs.getInt("YearOffered");
+
+				out.printf("%-3d %-8s %-20s %-8s %4d\n", sectid, dname, title, prof, year);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

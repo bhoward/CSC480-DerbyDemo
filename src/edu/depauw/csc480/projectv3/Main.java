@@ -50,11 +50,15 @@ public class Main {
 				addStudent(dbm);
 				break;
 
-			case "5": // Add enrollment
+			case "5": // List sections
+				listSections(dbm);
+				break;
+				
+			case "6": // Add enrollment
 				addEnrollment(dbm);
 				break;
 
-			case "6": // Change grade
+			case "7": // Change grade
 				changeGrade(dbm);
 				break;
 
@@ -72,8 +76,9 @@ public class Main {
 		out.println("2: List students");
 		out.println("3: Show transcript");
 		out.println("4: Add student");
-		out.println("5: Add enrollment");
-		out.println("6: Change grade");
+		out.println("5: List sections");
+		out.println("6: Add enrollment");
+		out.println("7: Change grade");
 	}
 
 	private static String requestString(String prompt) {
@@ -202,6 +207,26 @@ public class Main {
 		} else {
 			out.println("0 students inserted");
 		}
+	}
+
+	/**
+	 * Print a table of all sections with their id number, department, title,
+	 * professor, and year offered.
+	 * 
+	 * @param dbm
+	 */
+	private static void listSections(DatabaseManager dbm) {
+		out.printf("%-3s %-8s %-20s %-8s %4s\n", "Id", "Dept", "Title", "Prof", "Year");
+		out.println("-----------------------------------------------");
+
+		for (Section section : dbm.getSections()) {
+			Course course = section.getCourse();
+			Dept dept = course.getDept();
+			out.printf("%-3d %-8s %-20s %-8s %4d\n", section.getSectId(), dept.getDName(), course.getTitle(),
+					section.getProf(), section.getYearOffered());
+		}
+
+		dbm.commit();
 	}
 
 	/**

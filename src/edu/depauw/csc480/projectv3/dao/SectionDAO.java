@@ -169,6 +169,50 @@ public class SectionDAO {
 	}
 
 	/**
+	 * Retrieve a Collection of all sections in the database. Note that this is
+	 * pushing the limits of doing too much work on the client side and not in the
+	 * database server, because it might be tempting to filter this collection with
+	 * Java code. Instead, we should use this only when we really want all of the
+	 * sections, and write other query methods to retrieve specific subsets.
+	 * 
+	 * @return the collection
+	 */
+	public Collection<Section> getAll() {
+		try {
+			Collection<Section> sections = new ArrayList<>();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("select k.SectId, k.CourseId, k.Prof, k.YearOffered");
+			sb.append("  from SECTION k");
+
+			PreparedStatement pstmt = conn.prepareStatement(sb.toString());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int sectId = rs.getInt("SectId");
+				int courseId = rs.getInt("CourseId");
+				String prof = rs.getString("Prof");
+				int year = rs.getInt("YearOffered");
+
+				if (cache.containsKey(sectId)) {
+					sections.add(cache.get(sectId));
+				} else {
+					Course course = dbm.findCourse(courseId);
+					Section section = new Section(this, sectId, course, prof, year);
+					cache.put(sectId, section);
+					sections.add(section);
+				}
+			}
+			rs.close();
+
+			return sections;
+		} catch (SQLException e) {
+			dbm.cleanup();
+			throw new RuntimeException("error finding sections", e);
+		}
+	}
+
+	/**
 	 * Clear all data from the Section table.
 	 * 
 	 * @throws SQLException

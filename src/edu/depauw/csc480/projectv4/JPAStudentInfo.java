@@ -1,8 +1,5 @@
 package edu.depauw.csc480.projectv4;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -48,10 +45,8 @@ class TSPanel extends JPanel {
 	private JButton btn3 = new JButton("CLOSE");
 	private JLabel outputLbl = new JLabel("");
 	private DefaultTableModel courses;
-	private EntityManager em;
 
 	public TSPanel(final EntityManager em) {
-		this.em = em;
 		Object[] columnNames = {
 				"Title", "Year", "Grade"
 		};
@@ -66,35 +61,29 @@ class TSPanel extends JPanel {
 		add(outputLbl);
 		add(sp);
 
-		btn1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int sid = Integer.parseInt(txt.getText());
-				em.getTransaction().begin();
-				Student s = em.find(Student.class, sid);
-				display(s);
-				em.getTransaction().commit();
-			}
+		btn1.addActionListener(e -> {
+			int sid = Integer.parseInt(txt.getText());
+			em.getTransaction().begin();
+			Student s = em.find(Student.class, sid);
+			display(s);
+			em.getTransaction().commit();
 		});
 
-		btn2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String yearstring = JOptionPane.showInputDialog("Enter new grad year");
-				int sid = Integer.parseInt(txt.getText());
-				int newyear = Integer.parseInt(yearstring);
-				em.getTransaction().begin();
-				Student s = em.find(Student.class, sid);
-				s.setGradYear(newyear);
-				display(s);
-				em.getTransaction().commit();
-			}
+		btn2.addActionListener(e -> {
+			String yearstring = JOptionPane.showInputDialog("Enter new grad year");
+			int sid = Integer.parseInt(txt.getText());
+			int newyear = Integer.parseInt(yearstring);
+			em.getTransaction().begin();
+			Student s = em.find(Student.class, sid);
+			s.setGradYear(newyear);
+			display(s);
+			em.getTransaction().commit();
 		});
 
-		btn3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				em.close();
-				setVisible(false);
-				System.exit(0);
-			}
+		btn3.addActionListener(e -> {
+			em.close();
+			setVisible(false);
+			System.exit(0);
 		});
 	}
 
